@@ -1,9 +1,12 @@
 import React from "react";
 
-function Form({ value, setValue, handleSubmit }) {
-  console.log("Form is Rendering");
+function Form({ value, setValue, handleSubmit, setErrorMessage }) {
   const handleChange = (e) => {
     setValue(e.target.value);
+
+    if (e.target.value.length > 0) {
+      setErrorMessage("");
+    }
   };
 
   return (
@@ -12,7 +15,6 @@ function Form({ value, setValue, handleSubmit }) {
         type="text"
         name="value"
         className="w-full px-3 py-2 mr-4 text-gray-500 border rounded shadow"
-        style={{ flex: "10", padding: "5px" }}
         placeholder="할 일을 입력해주세요."
         value={value}
         onChange={handleChange}

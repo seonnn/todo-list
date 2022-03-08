@@ -4,8 +4,7 @@ import { Droppable } from "react-beautiful-dnd";
 import { DragDropContext } from "react-beautiful-dnd";
 import List from "./List";
 
-const Lists = React.memo(({ todoData, setTodoData, handleClick }) => {
-  console.log("Lists is Rendering");
+const Lists = React.memo(({ todoData, setTodoData, handleRemove }) => {
   const handleEnd = (result) => {
     const { destination } = result;
 
@@ -20,10 +19,6 @@ const Lists = React.memo(({ todoData, setTodoData, handleClick }) => {
     // 1. 변경시키는 아이템 배열에서 삭제
     // 2. return 값으로 지워진 아이템 잡아주기
     const [reorderedItem] = newTodoData.splice(result.source.index, 1);
-    // const reorderItem = newTodoData.splice(result.source.index, 1);
-
-    console.log(reorderedItem, typeof reorderedItem);
-    // console.log(reorderItem, typeof reorderItem);
 
     // 원하는 자리에 reorderedItem을 insert
     newTodoData.splice(result.destination.index, 0, reorderedItem);
@@ -35,7 +30,11 @@ const Lists = React.memo(({ todoData, setTodoData, handleClick }) => {
       <DragDropContext onDragEnd={handleEnd}>
         <Droppable droppableId="todo">
           {(provided) => (
-            <div {...provided.droppableProps} ref={provided.innerRef}>
+            <div
+              className="space-y-3"
+              {...provided.droppableProps}
+              ref={provided.innerRef}
+            >
               {todoData.map((data, index) => {
                 return (
                   <Draggable
@@ -53,7 +52,7 @@ const Lists = React.memo(({ todoData, setTodoData, handleClick }) => {
                         setTodoData={setTodoData}
                         provided={provided}
                         snapshot={snapshot}
-                        handleClick={handleClick}
+                        handleRemove={handleRemove}
                       />
                     )}
                   </Draggable>
